@@ -1,0 +1,135 @@
+.artist-popup
+  position: absolute
+  width: 400px
+  background: white
+  box-shadow: 5px 3px 5px #333
+  border: 2px solid #333
+  z-index: 100
+  overflow: visible
+  padding: 0
+  .inner
+    padding: 10px
+    background: white
+  .triangle
+    position: absolute
+    top: 60px
+  .triangle-inner
+    position: absolute
+    top: 61.5px
+  &.right
+    .triangle
+      left: 0%
+      margin-left: -15px
+      border-bottom: 15px solid transparent
+      border-top: 15px solid transparent
+      border-right: 15px solid #333
+    .triangle-inner
+      left: 0%
+      margin-left: -13px
+      border-bottom: 13px solid transparent
+      border-top: 13px solid transparent
+      border-right: 13px solid white
+  &.left
+    .triangle
+      left: auto
+      right: 0
+      margin-right: -15px
+      border-bottom: 15px solid transparent
+      border-top: 15px solid transparent
+      border-left: 15px solid #333
+    .triangle-inner
+      left: auto
+      right: 0
+      margin-right: -13px
+      border-bottom: 13px solid transparent
+      border-top: 13px solid transparent
+      border-left: 13px solid white
+
+ul.social-icons li.soundcloud a
+  background: url(http://farm9.staticflickr.com/8082/8292777643_65090144e9_z.jpg) top left no-repeat
+  background-size: 100% 100%
+  width: 32px
+  height: 32px
+  display: inline-block
+  text-indent: -9999px
+
+.artist-popup ul.tracks li
+  padding: 3px
+  background: #333
+  color: white
+  margin: 0 0 3px 0
+  cursor: pointer
+  i
+    margin-right: 5px
+
+#player
+  position: absolute
+  top: 170px
+  width: 300px
+  padding: 3px
+  height: 24px
+  z-index: 1001
+  background: black
+  &.fixed
+    top: 0
+    position: fixed
+
+#mini-navigation
+  width: auto
+
+#mini-search
+  float: right
+
+#player
+  .jp-controls
+    i
+      display: inline-block
+      line-height: 24px
+      text-align: center
+      width: 24px
+      height: 24px
+      color: white
+      font-size: 16px
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0px
+    width: 24px
+    background: red
+    overflow: hidden
+  .jp-progress
+    position: absolute
+    top: 3px
+    bottom: 3px
+    left: 24px
+    right: 80px
+    background: #eee
+    .jp-seek-bar
+      background: #333
+      position: absolute
+      top: 0
+      left: 0
+      height: 100%
+    .jp-play-bar
+      background: #4a9cba
+      position: absolute
+      top: 0
+      left: 0
+      height: 100%
+  .jp-right
+    right: 0
+    bottom: 0
+    height: 100%
+    background: red
+    position: absolute
+    text-align: center
+    line-height: 24px
+    width: 80px
+    font-size: 0.8em
+    color: white
+  .title
+    z-index: 10
+    position: absolute
+    pointer-events: none
+    line-height: 24px
+    font-size: 0.8em
