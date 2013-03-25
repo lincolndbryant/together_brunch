@@ -93,67 +93,82 @@ ul.social-icons li.soundcloud a {
 #mini-search {
   float: right; }
 
-@media -sass-debug-info{filename{}line{font-family:\0000384}}
-#player .jp-controls {
-  position: absolute;
+@media -sass-debug-info{filename{}line{font-family:\0000383}}
+#player {
+  z-index: 105; }
+@media -sass-debug-info{filename{}line{font-family:\0000385}}
+  #player .jp-controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0px;
+    width: 24px;
+    background: black;
+    overflow: hidden; }
+@media -sass-debug-info{filename{}line{font-family:\0000386}}
+    #player .jp-controls i {
+      display: inline-block;
+      line-height: 24px;
+      text-align: center;
+      width: 24px;
+      height: 24px;
+      color: white;
+      font-size: 16px; }
+@media -sass-debug-info{filename{}line{font-family:\00003101}}
+  #player .jp-progress {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 24px;
+    right: 80px;
+    background: black; }
+@media -sass-debug-info{filename{}line{font-family:\00003108}}
+    #player .jp-progress .jp-seek-bar {
+      background: #333333;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%; }
+@media -sass-debug-info{filename{}line{font-family:\00003114}}
+    #player .jp-progress .jp-play-bar {
+      background: #4a9cba;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%; }
+@media -sass-debug-info{filename{}line{font-family:\00003120}}
+  #player .jp-right {
+    right: 0;
+    top: 3px;
+    bottom: 3px;
+    background: black;
+    position: absolute;
+    text-align: center;
+    width: 80px;
+    font-size: 0.8em;
+    color: white; }
+@media -sass-debug-info{filename{}line{font-family:\00003130}}
+    #player .jp-right .jp-current-time, #player .jp-right .jp-duration {
+      line-height: 24px; }
+@media -sass-debug-info{filename{}line{font-family:\00003132}}
+  #player .title {
+    z-index: 10;
+    position: absolute;
+    pointer-events: none;
+    line-height: 24px;
+    font-size: 0.8em;
+    color: white; }
+
+@media -sass-debug-info{filename{}line{font-family:\00003140}}
+.lineup-opaque {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.2);
   top: 0;
   left: 0;
-  bottom: 0px;
-  width: 24px;
-  background: black;
-  overflow: hidden; }
-@media -sass-debug-info{filename{}line{font-family:\0000385}}
-  #player .jp-controls i {
-    display: inline-block;
-    line-height: 24px;
-    text-align: center;
-    width: 24px;
-    height: 24px;
-    color: white;
-    font-size: 16px; }
-@media -sass-debug-info{filename{}line{font-family:\00003100}}
-#player .jp-progress {
-  position: absolute;
-  top: 3px;
-  bottom: 3px;
-  left: 24px;
-  right: 80px;
-  background: black; }
-@media -sass-debug-info{filename{}line{font-family:\00003107}}
-  #player .jp-progress .jp-seek-bar {
-    background: #333333;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%; }
-@media -sass-debug-info{filename{}line{font-family:\00003113}}
-  #player .jp-progress .jp-play-bar {
-    background: #4a9cba;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%; }
-@media -sass-debug-info{filename{}line{font-family:\00003119}}
-#player .jp-right {
   right: 0;
   bottom: 0;
-  top: 3px;
-  bottom: 3px;
-  height: 100%;
-  background: black;
-  position: absolute;
-  text-align: center;
-  width: 80px;
-  font-size: 0.8em;
-  color: white; }
-@media -sass-debug-info{filename{}line{font-family:\00003131}}
-  #player .jp-right .jp-current-time, #player .jp-right .jp-duration {
-    line-height: 24px; }
-@media -sass-debug-info{filename{}line{font-family:\00003133}}
-#player .title {
-  z-index: 10;
-  position: absolute;
-  pointer-events: none;
-  line-height: 24px;
-  font-size: 0.8em;
-  color: white; }
+  z-index: 90; }
+
+@media -sass-debug-info{filename{}line{font-family:\00003151}}
+.portfolio-items li.active {
+  z-index: 95; }

@@ -3,10 +3,12 @@ Lineup = (($) ->
     isOpen = false
     $player = $("<div id=\"player\"></div>")
     $currentPopup = undefined
+    baseUrl = document.location.toString().replace(document.location.hash, '')
     sel =
         artist: '.portfolio-items li'
     show = ->
         hideAll()
+        $('.lineup-opaque').show()
         $popup = $(this).data("artistPopup")
         $currentPopup = $popup
         left = $(this).offset().left
@@ -32,7 +34,8 @@ Lineup = (($) ->
     hideAll = ->
         isOpen = false
         $(".artist-popup").hide()
-        $(".lineup h1").removeClass "active"
+        $(sel.artist).removeClass "active"
+        $('.lineup-opaque').hide()
 
     load = ->
         $(this).data "tracks", "loading"
@@ -65,6 +68,17 @@ Lineup = (($) ->
             track.click scPlay
             $el.append track
 
+    share = ->
+        artistName = $(this).data('artistName')
+        artistId = $(this).data('id')
+        story =
+            method: 'feed',
+            link: baseUrl + '#/' + artistId,
+            picture: $(this).find('figure img').attr('src'),
+            name: artistName,
+            caption: "I'm going to #{artistName} at Together Boston 2013"
+        FB.ui(story);
+
     mouseOut = ->
         hideAll() if $currentPopup is $(this).data("artistPopup")
 
@@ -82,8 +96,10 @@ Lineup = (($) ->
         context =
             id: artistId
             soundcloudUsername: soundcloudUsername
-
-        console.log context
+            artistName: artistName
+        $(this).data(context)
+        context.baseUrl = baseUrl
+        context.artistUrl = baseUrl + '#/' + artistName
         $popup = $(template(context))
         $(document.body).append $popup
         $(this).hover show
@@ -93,7 +109,9 @@ Lineup = (($) ->
             console.log "mouseleave"
             console.log $(this)
             console.log evt
-            $popup.hide()
+            hideAll()
+        .find('.share').click =>
+            share.call(this)
 
 
     init = ->
@@ -112,6 +130,8 @@ Lineup = (($) ->
         $("#jplayer").jPlayer cssSelectorAncestor: "#jp_container"
         $player.show()
 
+        $(document.body).append $('<div class="lineup-opaque"></div>').hide()
+
     $ ->
         init()
 
@@ -120,6 +140,7 @@ Lineup = (($) ->
             show.call($(sel.artist + "[data-artistid='#{artistId}']"))
 
         $(window).scroll ->
+            debugger
             if $(this).scrollTop() > $("#nav-section").offset().top
                 $("#player").addClass "fixed"
             else

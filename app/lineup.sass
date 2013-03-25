@@ -81,6 +81,7 @@ ul.social-icons li.soundcloud a
   float: right
 
 #player
+  z-index: 105
   .jp-controls
     i
       display: inline-block
@@ -118,10 +119,8 @@ ul.social-icons li.soundcloud a
       height: 100%
   .jp-right
     right: 0
-    bottom: 0
     top: 3px
     bottom:  3px
-    height: 100%
     background: black
     position: absolute
     text-align: center
@@ -137,3 +136,17 @@ ul.social-icons li.soundcloud a
     line-height: 24px
     font-size: 0.8em
     color: white
+
+.lineup-opaque
+  position: fixed
+  background: rgba(0, 0, 0, 0.2)
+  top: 0
+  left: 0
+  right:  0
+  bottom: 0
+  z-index: 90
+
+.portfolio-items
+  li
+    &.active
+      z-index: 95

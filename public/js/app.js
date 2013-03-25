@@ -84,11 +84,12 @@ var Lineup, SC_ID;
 SC_ID = "528dd3394707d2e437879317d161890a";
 
 Lineup = (function($) {
-  var $currentPopup, $player, drawTracks, getSoundcloud, hide, hideAll, init, initArtist, isOpen, load, mouseOut, render, scPlay, sel, show;
+  var $currentPopup, $player, baseUrl, drawTracks, getSoundcloud, hide, hideAll, init, initArtist, isOpen, load, mouseOut, render, scPlay, sel, share, show;
 
   isOpen = false;
   $player = $("<div id=\"player\"></div>");
   $currentPopup = void 0;
+  baseUrl = document.location.toString().replace(document.location.hash, '');
   sel = {
     artist: '.portfolio-items li'
   };
@@ -96,6 +97,7 @@ Lineup = (function($) {
     var $popup, left;
 
     hideAll();
+    $('.lineup-opaque').show();
     $popup = $(this).data("artistPopup");
     $currentPopup = $popup;
     left = $(this).offset().left;
@@ -124,7 +126,8 @@ Lineup = (function($) {
   hideAll = function() {
     isOpen = false;
     $(".artist-popup").hide();
-    return $(".lineup h1").removeClass("active");
+    $(sel.artist).removeClass("active");
+    return $('.lineup-opaque').hide();
   };
   load = function() {
     var popup,
@@ -163,6 +166,20 @@ Lineup = (function($) {
       return $el.append(track);
     });
   };
+  share = function() {
+    var artistId, artistName, story;
+
+    artistName = $(this).data('artistName');
+    artistId = $(this).data('id');
+    story = {
+      method: 'feed',
+      link: baseUrl + '#/' + artistId,
+      picture: $(this).find('figure img').attr('src'),
+      name: artistName,
+      caption: "I'm going to " + artistName + " at Together Boston 2013"
+    };
+    return FB.ui(story);
+  };
   mouseOut = function() {
     if ($currentPopup === $(this).data("artistPopup")) {
       return hideAll();
@@ -178,7 +195,8 @@ Lineup = (function($) {
     }
   };
   initArtist = function() {
-    var $popup, artistId, artistName, context, soundcloudUsername, template;
+    var $popup, artistId, artistName, context, soundcloudUsername, template,
+      _this = this;
 
     artistName = $(this).find(".portfolio-item-title").text();
     artistId = _(artistName.toLowerCase().replace(RegExp(" ", "g"), "_")).without('(', ')').join('');
@@ -186,9 +204,12 @@ Lineup = (function($) {
     template = window.templates["app/templates/artist_popup.hbs"];
     context = {
       id: artistId,
-      soundcloudUsername: soundcloudUsername
+      soundcloudUsername: soundcloudUsername,
+      artistName: artistName
     };
-    console.log(context);
+    $(this).data(context);
+    context.baseUrl = baseUrl;
+    context.artistUrl = baseUrl + '#/' + artistName;
     $popup = $(template(context));
     $(document.body).append($popup);
     $(this).hover(show);
@@ -198,7 +219,9 @@ Lineup = (function($) {
       console.log("mouseleave");
       console.log($(this));
       console.log(evt);
-      return $popup.hide();
+      return hideAll();
+    }).find('.share').click(function() {
+      return share.call(_this);
     });
   };
   init = function() {
@@ -221,7 +244,8 @@ Lineup = (function($) {
     $("#jplayer").jPlayer({
       cssSelectorAncestor: "#jp_container"
     });
-    return $player.show();
+    $player.show();
+    return $(document.body).append($('<div class="lineup-opaque"></div>').hide());
   };
   $(function() {
     var artistId;
@@ -232,7 +256,7 @@ Lineup = (function($) {
       show.call($(sel.artist + ("[data-artistid='" + artistId + "']")));
     }
     return $(window).scroll(function() {
-      if ($(this).scrollTop() > $("#nav-section").offset().top) {
+      debugger;      if ($(this).scrollTop() > $("#nav-section").offset().top) {
         return $("#player").addClass("fixed");
       } else {
         return $("#player").removeClass("fixed");
