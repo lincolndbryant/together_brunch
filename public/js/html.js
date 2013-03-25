@@ -5,7 +5,7 @@ if (typeof window.templates == 'undefined') window.templates = {}; window.templa
   var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"blog-item isotope-item artist-popup\">\n	<div class=\"inner\">\n	    <figure>\n	        <a href=\"\" class=\"link-to-post\">\n	            <div class=\"overlay\">\n	                <div class=\"thumb-info\"><i class=\"icon-file-alt\"></i></div>\n	            </div>\n\n	        </a>\n	    </figure>\n	    <div class=\"blog-details-wrap\">\n\n	        <ul class=\"tracks\">\n\n	        </ul>\n\n	        <div class=\"read-more-bar\">\n	            <div class=\"comments-likes\">\n	                <a href=\"http://togetherboston.com/boston-calling/#comment-area\"><i class=\"icon-comments\"></i><span>\n                        <fb:comments-count href=\"http://togetherboston.com/lineup/#";
+  buffer += "<div class=\"blog-item isotope-item artist-popup\">\n	<div class=\"inner\">\n	    <figure>\n	        <a href=\"\" class=\"link-to-post\">\n	            <div class=\"overlay\">\n	                <div class=\"thumb-info\"><i class=\"icon-file-alt\"></i></div>\n	            </div>\n\n	        </a>\n	    </figure>\n	    <div class=\"blog-details-wrap\">\n            <ul class=\"tracks\">\n\n	        </ul>\n\n	        <div class=\"read-more-bar\">\n	            <div class=\"comments-likes\">\n	                <a href=\"http://togetherboston.com/boston-calling/#comment-area\"><i class=\"icon-comments\"></i><span>\n                        <fb:comments-count href=\"http://togetherboston.com/lineup/#";
   foundHelper = helpers.id;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
@@ -13,7 +13,11 @@ if (typeof window.templates == 'undefined') window.templates = {}; window.templa
   foundHelper = helpers.id;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\" data-width=\"100%\" data-num-posts=\"10\"></div>\n\n\n	    </div>\n    \n    </div>\n\n\n    <div class=\"triangle\"></div>\n    <div class=\"triangle-inner\"></div>\n</div>";
+  buffer += escapeExpression(stack1) + "\" data-width=\"400\" data-num-posts=\"10\"></div>\n            <div class=\"fb-like\" data-send=\"false\" data-layout=\"button_count\" data-width=\"400\" data-href=\"http://togetherboston.com/lineup/#";
+  foundHelper = helpers.id;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" data-show-faces=\"true\"></div>\n\n\n\n        </div>\n    \n    </div>\n\n\n    <div class=\"triangle\"></div>\n    <div class=\"triangle-inner\"></div>\n</div>";
   return buffer;});
 
 if (typeof window.templates == 'undefined') window.templates = {}; window.templates['app/templates/player.hbs'] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

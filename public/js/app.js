@@ -84,11 +84,14 @@ var Lineup, SC_ID;
 SC_ID = "528dd3394707d2e437879317d161890a";
 
 Lineup = (function($) {
-  var $currentPopup, $player, drawTracks, getSoundcloud, hide, hideAll, init, initArtist, isOpen, load, mouseOut, render, scPlay, show;
+  var $currentPopup, $player, drawTracks, getSoundcloud, hide, hideAll, init, initArtist, isOpen, load, mouseOut, render, scPlay, sel, show;
 
   isOpen = false;
   $player = $("<div id=\"player\"></div>");
   $currentPopup = void 0;
+  sel = {
+    artist: '.portfolio-items li'
+  };
   show = function() {
     var $popup, left;
 
@@ -104,7 +107,7 @@ Lineup = (function($) {
       $popup.removeClass("left").addClass("right");
     }
     $popup.show().css({
-      top: $(this).offset().top - ($(this).height() / 2),
+      top: $(this).offset().top,
       left: left
     });
     $(this).addClass("active");
@@ -124,15 +127,19 @@ Lineup = (function($) {
     return $(".lineup h1").removeClass("active");
   };
   load = function() {
-    var _this = this;
+    var popup,
+      _this = this;
 
     $(this).data("tracks", "loading");
+    popup = $(this).data("artistPopup");
+    popup.find('ul.tracks').append('<li>Loading...</li>');
     return SC.get("/resolve.json?limit=5&url=http://soundcloud.com/" + $(this).data("artist").soundcloudUsername + "/tracks", {
       limit: 5
     }, function(tracks) {
       tracks = tracks.slice(tracks.length - 5);
       $(_this).data("tracks", tracks);
-      return drawTracks($(_this).data("artistPopup").find("ul.tracks"), tracks);
+      popup.find('ul.tracks').html('');
+      return drawTracks(popup.find("ul.tracks"), tracks);
     });
   };
   scPlay = function() {
@@ -174,7 +181,7 @@ Lineup = (function($) {
     var $popup, artistId, artistName, context, soundcloudUsername, template;
 
     artistName = $(this).find(".portfolio-item-title").text();
-    artistId = artistName.toLowerCase().replace(RegExp(" ", "g"), "_").replace("(", "").replace(")", "");
+    artistId = _(artistName.toLowerCase().replace(RegExp(" ", "g"), "_")).without('(', ')').join('');
     soundcloudUsername = getSoundcloud($(this));
     template = window.templates["app/templates/artist_popup.hbs"];
     context = {
@@ -186,6 +193,7 @@ Lineup = (function($) {
     $(document.body).append($popup);
     $(this).hover(show);
     $(this).data("artistPopup", $popup).data("artist", context);
+    $(this).attr('data-artistid', artistId);
     return $popup.mouseleave(function(evt) {
       console.log("mouseleave");
       console.log($(this));
@@ -196,7 +204,7 @@ Lineup = (function($) {
   init = function() {
     var playerTemplate;
 
-    $(".portfolio-items li").each(initArtist);
+    $(sel.artist).each(initArtist);
     $(".portfolio-items").mouseleave(function(evt) {
       console.log(evt);
       if ($(evt.relatedTarget).parents(".artist-popup").length > 0) {
@@ -216,7 +224,13 @@ Lineup = (function($) {
     return $player.show();
   };
   $(function() {
+    var artistId;
+
     init();
+    if (document.location.hash) {
+      artistId = _(document.location.hash).without('#', '/').join('');
+      show.call($(sel.artist + ("[data-artistid='" + artistId + "']")));
+    }
     return $(window).scroll(function() {
       if ($(this).scrollTop() > $("#nav-section").offset().top) {
         return $("#player").addClass("fixed");

@@ -95,7 +95,7 @@ ul.social-icons li.soundcloud a
     left: 0
     bottom: 0px
     width: 24px
-    background: red
+    background: black
     overflow: hidden
   .jp-progress
     position: absolute
@@ -103,7 +103,7 @@ ul.social-icons li.soundcloud a
     bottom: 3px
     left: 24px
     right: 80px
-    background: #eee
+    background: black
     .jp-seek-bar
       background: #333
       position: absolute
@@ -119,17 +119,21 @@ ul.social-icons li.soundcloud a
   .jp-right
     right: 0
     bottom: 0
+    top: 3px
+    bottom:  3px
     height: 100%
-    background: red
+    background: black
     position: absolute
     text-align: center
-    line-height: 24px
     width: 80px
     font-size: 0.8em
     color: white
+    .jp-current-time, .jp-duration
+      line-height: 24px
   .title
     z-index: 10
     position: absolute
     pointer-events: none
     line-height: 24px
     font-size: 0.8em
+    color: white

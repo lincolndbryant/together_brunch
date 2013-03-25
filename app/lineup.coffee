@@ -3,6 +3,8 @@ Lineup = (($) ->
     isOpen = false
     $player = $("<div id=\"player\"></div>")
     $currentPopup = undefined
+    sel =
+        artist: '.portfolio-items li'
     show = ->
         hideAll()
         $popup = $(this).data("artistPopup")
@@ -15,7 +17,7 @@ Lineup = (($) ->
             left += $(this).width() + 20
             $popup.removeClass("left").addClass "right"
         $popup.show().css
-            top: ($(this).offset().top - ($(this).height() / 2))
+            top: $(this).offset().top
             left: left
 
         $(this).addClass "active"
@@ -34,6 +36,8 @@ Lineup = (($) ->
 
     load = ->
         $(this).data "tracks", "loading"
+        popup = $(this).data("artistPopup")
+        popup.find('ul.tracks').append('<li>Loading...</li>')
         SC.get "/resolve.json?limit=5&url=http://soundcloud.com/" + $(this).data("artist").soundcloudUsername + "/tracks",
                limit: 5
         , (tracks) =>
@@ -41,7 +45,8 @@ Lineup = (($) ->
             #debugger
             tracks = tracks.slice(tracks.length - 5)
             $(_this).data "tracks", tracks
-            drawTracks $(this).data("artistPopup").find("ul.tracks"), tracks
+            popup.find('ul.tracks').html('')
+            drawTracks popup.find("ul.tracks"), tracks
 
 
     scPlay = ->
@@ -71,7 +76,7 @@ Lineup = (($) ->
 
     initArtist = ->
         artistName = $(this).find(".portfolio-item-title").text()
-        artistId = artistName.toLowerCase().replace(RegExp(" ", "g"), "_").replace("(", "").replace(")", "")
+        artistId = _(artistName.toLowerCase().replace(RegExp(" ", "g"), "_")).without('(', ')').join('')
         soundcloudUsername = getSoundcloud($(this))
         template = window.templates["app/templates/artist_popup.hbs"]
         context =
@@ -83,6 +88,7 @@ Lineup = (($) ->
         $(document.body).append $popup
         $(this).hover show
         $(this).data("artistPopup", $popup).data "artist", context
+        $(this).attr('data-artistid', artistId)
         $popup.mouseleave (evt) ->
             console.log "mouseleave"
             console.log $(this)
@@ -91,7 +97,7 @@ Lineup = (($) ->
 
 
     init = ->
-        $(".portfolio-items li").each initArtist
+        $(sel.artist).each initArtist
         $(".portfolio-items").mouseleave (evt) ->
             console.log evt
             return false  if $(evt.relatedTarget).parents(".artist-popup").length > 0
@@ -108,6 +114,11 @@ Lineup = (($) ->
 
     $ ->
         init()
+
+        if document.location.hash
+            artistId = _(document.location.hash).without('#', '/').join('')
+            show.call($(sel.artist + "[data-artistid='#{artistId}']"))
+
         $(window).scroll ->
             if $(this).scrollTop() > $("#nav-section").offset().top
                 $("#player").addClass "fixed"
